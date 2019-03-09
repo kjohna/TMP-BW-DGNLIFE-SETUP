@@ -1,16 +1,14 @@
 const express = require("express");
-const helmet = require("helmet");
-const cors = require("cors");
+
+const configMiddleware = require("./middleware.js");
 
 const db = require("../data/dbConfig.js");
 
 const server = express();
 
-server.use(helmet());
-server.use(express.json());
-server.use(cors());
+configMiddleware(server);
 
-server.get("", (req, res) => {
+server.get("/", (req, res) => {
   res.status(200).json({ message: "Server says hi." });
 });
 
