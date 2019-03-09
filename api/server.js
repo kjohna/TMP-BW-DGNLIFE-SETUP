@@ -2,6 +2,8 @@ const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 
+const db = require("../data/dbConfig.js");
+
 const server = express();
 
 server.use(helmet());
@@ -10,6 +12,11 @@ server.use(cors());
 
 server.get("", (req, res) => {
   res.status(200).json({ message: "Server says hi." });
+});
+
+server.get("/testDb", async (req, res) => {
+  const rows = await db("test");
+  res.status(200).json(rows);
 });
 
 module.exports = server;
