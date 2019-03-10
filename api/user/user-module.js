@@ -6,9 +6,12 @@ module.exports = {
 };
 
 async function add(user) {
-  console.log(user);
-  const [id] = await db("users").insert(user);
-  return findById(id);
+  try {
+    const [id] = await db("users").insert(user);
+    return findById(id);
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
 async function findById(id) {

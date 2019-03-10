@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const tokenSvc = require("./token-service");
 const User = require("../user/user-module.js");
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   let user = req.body;
 
   // hash user's password, overwrite orig for storage
@@ -13,13 +13,12 @@ router.post("/register", (req, res) => {
   // gen token
   const token = tokenSvc.generateToken(user);
 
-  User.add(user)
-    .then(saved => {
-      res.status(201).json({ saved, token });
-    })
-    .catch(error => {
-      res.status(500).json(error);
-    });
+  try {
+    const saved = await User.add(user);
+    res.status(201).json({ saved, token });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
 });
 
 module.exports = router;
