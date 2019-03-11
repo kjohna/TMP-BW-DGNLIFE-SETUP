@@ -2,6 +2,9 @@
   "name": "design-your-life",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "11.7.0"
+  },
   "main": "index.js",
   "scripts": {
     "server": "nodemon index.js",
